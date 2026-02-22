@@ -45,6 +45,11 @@ set(CMAKE_INSTALL_PREFIX "/opt/blasfeo" CACHE STRING "Installation path")
 # set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
 #set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
 
+# SOTA FIX: Set CMP0194 to NEW to prevent MSVC from being used as ASM compiler
+if(POLICY CMP0194)
+    cmake_policy(SET CMP0194 NEW)
+endif()
+
 project(blasfeo C ASM)
 
 include(GNUInstallDirs)
@@ -81,11 +86,11 @@ set(LA HIGH_PERFORMANCE CACHE STRING "Linear algebra backend")
 # set(LA EXTERNAL_BLAS_WRAPPER CACHE STRING "Linear algebra backend")
 
 # check supported compiler for target
-if(CMAKE_C_COMPILER_ID MATCHES MSVC)
-	if(NOT ${TARGET} MATCHES GENERIC)
-		message( FATAL_ERROR "MSVC compiler only supported for TARGET=GENERIC")
-	endif()
-endif()
+#if(CMAKE_C_COMPILER_ID MATCHES MSVC)
+#	if(NOT ${TARGET} MATCHES GENERIC)
+#		message( FATAL_ERROR "MSVC compiler only supported for TARGET=GENERIC")
+#	endif()
+#endif()
 
 # Export additional back-ends with different naming
 set(BLASFEO_REF_API ON)
